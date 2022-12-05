@@ -84,10 +84,8 @@
         </div>
     </header>
 
-    <div id = "app">
-
     <!-- Contactos Grid Section -->
-    <section id="app">
+    <section id="contactos">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -99,26 +97,26 @@
                 <div class="row">
                     <div class="col-xs-4">
                         <h4>Nombre</h4>
-                        <div class="col-xs-4" v-for = "x in contacts">
-                            <p>{{ x.name }}</p>
-                        </div>
                     </div>
                     <div class="col-xs-4">
                         <h4>Email</h4>
-                        <div class="col-xs-4" v-for = "x in contacts">
-                            <p>{{ x.email }}</p>
-                        </div>
                     </div>
                     <div class="col-xs-3">
                         <h4>Teléfono</h4>
-                        <div class="col-xs-3" v-for = "x in contacts">
-                            <p>{{ x.telf }}</p>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-xs-4">
+                        <p>John Doe</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <p>john.doe@deusto.es</p>
+                    </div>
+                    <div class="col-xs-3">
+                        <p>555555555</p>
+                    </div>
                     <div class="col-xs-1">
-                        <button onclick="return false" class="btn btn-danger btn-sm" @click="deleteContact"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
                     </div>
                 </div>
             </div>
@@ -133,7 +131,7 @@
     </section>
 
     <!-- Añadir nuevo Section -->
-    <section id="app">
+    <section id="nuevo">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -172,7 +170,8 @@
                         <div id="success"></div>
                         <div class="row">
                             <div class="form-group col-xs-12">
-                                <button onclick="return false" class="btn btn-success btn-lg" @click="addContact"><p>Añadir</p></button>
+                                <button type="submit" class="btn btn-success
+                                        btn-lg" @click="addContact">Añadir</button>
                             </div>
                         </div>
                     </form>
@@ -180,7 +179,6 @@
             </div>
         </div>
     </section>
-    </div>
 
     <!-- About Section -->
     <section class="success" id="about">
@@ -243,24 +241,32 @@
     <!--Vue adicion de funcionalidades-->
     <script>
         var app = new Vue({
-            el: '#app',
+            el: '#nuevo',
             data: {
+                error: false,
                 contact_name: null,
                 contact_email: null,
                 contact_telf: null,
-                contacts: [{name: "John Doe", email: "john.doe@deusto.es", telf: "555555555"}]
+                contact_search: null,
+                contacts: []
             },
             methods: {
                 addContact() {
-                    this.contacts.push({
-                        name: this.contact_name,
-                        email: this.contact_email,
-                        telf: this.contact_telf
-                    });
-                    alert("El contacto de " + this.contact_name + " se ha añadido correctamente.");
-                    this.contact_name = '';
-                    this.contact_email = '';
-                    this.contact_telf = '';
+                    if (this.contact_name != null && this.contact_email != null && this.contact_telf != null) {
+                        this.contacts.push({
+                            name: this.contact_name,
+                            email: this.contact_email,
+                            telf: this.contact_telf
+                        });
+                        if (this.error) {
+                            this.error = false;
+                        }
+                        this.contact_name = '';
+                        this.contact_number = '';
+                        this.contact_description = '';
+                    } else {
+                        this.error = true;
+                    }
                 },
                 deleteContact(arrayItem) {
                     let index = this.contacts.indexOf(arrayItem);
