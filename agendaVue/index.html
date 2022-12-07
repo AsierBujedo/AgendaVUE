@@ -106,7 +106,7 @@
                     <div class="col-xs-3">
                         <h4>Teléfono</h4>
                     </div>
-                <div class="row" v-for = "x in contacts">
+                <div class="row" v-for = "(x, index) in contacts">
                     <div class="col-xs-4">
                         <p>{{ x.name }}</p>
                     </div>
@@ -116,10 +116,11 @@
                     <div class="col-xs-3">
                         <p>{{ x.telf }}</p>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-1">
-                        <button onclick="return false" class="btn btn-danger btn-sm" @click="deleteContact"><span class="glyphicon glyphicon-remove"></span></button>
+                
+                    <div class="row">
+                        <div class="col-xs-1">
+                            <button onclick="return false" class="btn btn-danger btn-sm" @click="deleteContact(index)"><span class="glyphicon glyphicon-remove"></span></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -263,8 +264,7 @@
                     this.contact_email = '';
                     this.contact_telf = '';
                 },
-                deleteContact(arrayItem) {
-                    let index = this.contacts.indexOf(arrayItem);
+                deleteContact(index) {
                     this.contacts.splice(index, 1);
                 },
             }
